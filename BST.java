@@ -1,11 +1,10 @@
+//Sepid Ebrahimi, CS245, Prof. David Guy
+
 public class BST<T extends Comparable<T>> {
-    Comparable data;
-    BSTNode<T> left;
-    BSTNode<T> right;
     BSTNode<T> root;
 
 
-    public BST(){
+    public BST(){ //constructor
         root = null;
     }
 
@@ -13,17 +12,17 @@ public class BST<T extends Comparable<T>> {
         return find(root,value);
     }
 
-    private boolean find(BSTNode<T> node, T value){
-        if(node==null){
+    private boolean find(BSTNode<T> node, T value){ //find the node
+        if(node==null){ // if node does not exist
             return false;
         }
         if(value.compareTo(node.getData())==0){
             return true;
         }
-        else if(value.compareTo(node.getData()) > 0){
+        else if(value.compareTo(node.getData()) > 0){ //if value is greater than the node, go to the right side of the node
             return find(node.getRight(),value);
         }
-        else{
+        else{ //if value is smaller than the node, go to the left side of the node
             return find(node.getLeft(),value);
         }
     }
@@ -37,10 +36,10 @@ public class BST<T extends Comparable<T>> {
             if(node == null) {
                 return new BSTNode<T>(value);
             }
-            if(value.compareTo(node.getData()) > 0) {
+            if(value.compareTo(node.getData()) > 0) { //if value is greater than the node, go to the right side of the node
                 node.setRight(insert(value, node.getRight()));
                 return node;
-            } else {
+            } else { //if value is smaller than the node, go to the left side of the node
                 node.setLeft(insert(value, node.getLeft()));
                 return node;
             }
@@ -67,15 +66,15 @@ public class BST<T extends Comparable<T>> {
         if(node == null){
             return null;
         }
-        if(value.compareTo(node.getData()) == 0){
-            if(node.getLeft()==null){
+        if(value.compareTo(node.getData()) == 0){ //if value is equal to the data of the node
+            if(node.getLeft()==null){ // if there is no child on the left
                 return node.getRight();
             }
-            else if(node.getRight()==null){
+            else if(node.getRight()==null){//if there is no child on the right
                 return node.getLeft();
             }
             else{
-                if(node.getRight().getLeft() == null){
+                if(node.getRight().getLeft() == null){ //if the node on the right has a child on left
                     node.setData(node.getRight().getData());
                     node.setRight(node.getRight().getRight());
                     return node;
@@ -86,10 +85,10 @@ public class BST<T extends Comparable<T>> {
                 }
             }
         }
-        else if (value.compareTo(node.getData())< 0) {
+        else if (value.compareTo(node.getData())< 0) {  //if value is smaller than node's value
             node.setLeft(delete(node.getLeft(), value));
             return node;
-        } else {
+        } else { //if value is greater than node's value
             node.setRight(delete(node.getRight(), value));
             return node;
         }
@@ -98,7 +97,7 @@ public class BST<T extends Comparable<T>> {
 
     private T removeSmallest (BSTNode<T> node) {
 
-        if(node.getLeft().getLeft() == null) {
+        if(node.getLeft().getLeft() == null) { //if the left node does not have a child on left
             T smallest = node.getLeft().getData();
             node.setLeft(node.getLeft().getRight());
             return smallest;
